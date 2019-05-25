@@ -1,9 +1,11 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="beans.SjCmCode"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <html>
-<%String item = (String)request.getAttribute("result"); %>
+<%ArrayList<SjCmCode> item = (ArrayList<SjCmCode>)request.getAttribute("result"); %>
 <head>
 	<title>Home</title>
 	<style>
@@ -42,13 +44,14 @@
 			<th>등록일</th>
 			<th>조회수</th>
 		</tr>
+		
+		<%for(int i=0; i<item.size(); i++) {%>
 		<tr>
-			<td><%=item %></td>
-			<td>노트북</td>
-			<td>홍길동</td>
-			<td>05.18</td>
-			<td>12</td>
+			<td><%=item.get(i).getCmCode()%></td>
+			<td><%=item.get(i).getCmCodeName()%></td>
+			
 		</tr>
+		<% }%>
 		</table>
 		
 		</div>

@@ -6,6 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import beans.SjCmCode;
 
 public class Test {
  
@@ -23,13 +27,21 @@ public class Test {
 	    
 	    stmt.execute();
 	    
+	    stmt.close();
+	    db.close();
+	    
 	} catch (ClassNotFoundException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
  }
- public String open(String id) {
+ public ArrayList<SjCmCode> open(String id) {
+	 ArrayList<SjCmCode> items = new ArrayList<SjCmCode>();
+
+	 SjCmCode testItem = new SjCmCode();
 	 String num_one="";
+	 String nm="";
+	 
 	 try {
 		   Class.forName("org.sqlite.JDBC");
 		   String url = "jdbc:sqlite:/C:/Users/K/MySQLiteDB";
@@ -39,10 +51,23 @@ public class Test {
 			   PreparedStatement pre = db.prepareStatement(query);
 			   ResultSet row = pre.executeQuery();
 			   
-			   if(row.next()) { 
-				   num_one=row.getString(1); 
+			   while(row.next()) {
+				   num_one=row.getString(1);
+				   nm=row.getString(2);
 				   System.out.println("처음 : "+num_one);
+				   System.out.println("이름 : "+nm);
+				   
+				   testItem.setCmCode(num_one);
+				   testItem.setCmCodeName(nm);
+				   
+				   items.add(testItem);
+				   
+				   testItem = null;
+				   testItem = new SjCmCode();
+				 
 			   }
+			   System.out.println(items.toString());
+			   
 			   row.close(); 
 			   pre.close();
 			   db.close();
@@ -54,6 +79,6 @@ public class Test {
 		  } catch(SQLException e) {
 		   System.err.println("Error : " + e);
 		  }
-	 return num_one;
+	 return items;
  }
 }

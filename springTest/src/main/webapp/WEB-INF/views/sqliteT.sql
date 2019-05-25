@@ -25,5 +25,6 @@ pragma table_info(SJ_FIX_HIST);
 DROP TABLE SJ_FIX_HIST;
 
 insert into SJ_CM_CODE values (123, 456);
+insert into SJ_CM_CODE values (223, "ewqew");
 
 select * from SJ_CM_CODE;
